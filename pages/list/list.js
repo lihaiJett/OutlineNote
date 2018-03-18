@@ -50,10 +50,10 @@ Page({
  */
 function initData (page) {
   var arr = wx.getStorageSync('txt');
-  if (arr.length) {
+  if (arr.length) { 
     arr.forEach((item, i) => {
       var t = new Date(Number(item.time));
-      item.time = "sdfasdf";//util.dateFormate(t);
+      item.time = util.formatTime(t);
     })
     page.setData({
       lists: arr

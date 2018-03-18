@@ -22,10 +22,13 @@ Page({
     EssayList: {}
   },
   add1: function (e) {
+    var firstI = parseInt(e.currentTarget.id);
+    console.log(firstI);
     var item = EssayItem(1,1);
     item.num = this.data.EssayList.length +1;
     item.key = item.num-1;
-    this.data.EssayList.push(item);
+    this.data.EssayList[firstI].content.push(item);
+    this.data.EssayList[firstI].hasChild = true;
     this.setData({
       EssayList: this.data.EssayList
     } );  
@@ -51,9 +54,9 @@ Page({
     var index = e.currentTarget.id.split('.');
     var firstI = parseInt(index[0]);
     var secondI = parseInt(index[1]);
-    console.log(index[0] + "," + String(this.data.EssayList[1][1].num) + "," + index[1] + "___" + e.detail.value);
+    console.log(index[0] + "," + String(this.data.EssayList[firstI].content[secondI].num) + "," + index[1] + "___" + e.detail.value);
      
-    // this.data.EssayList[index[0]][index[1]].content = ""+e.detail.value;
+    this.data.EssayList[firstI].content[secondI].content = ""+e.detail.value;
     
   },
   /**
@@ -61,12 +64,25 @@ Page({
    */
   onLoad: function (options) {
     var mEssayList = [
-      EssayItem(1, "43534534"),
-      EssayItem(2, [
-        EssayItem(1, "43534534"),
-        EssayItem(2, "43534534")
-      ]),
-      EssayItem(3, 'sdfadf'),
+      {
+        key:0,
+        num:1,
+        content:[
+          {
+            key: 0.0,
+            num: 1,
+            content: "xxx",
+            hasChild: false
+          }
+        ],
+        hasChild:true
+      },
+      {
+        key: 1,
+        num: 2,
+        content: [],
+        hasChild: false
+      }
     ];
     this.setData(
       {

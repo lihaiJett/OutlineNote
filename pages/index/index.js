@@ -53,7 +53,7 @@ Page({
   },
   toMyView: function () {
     wx.navigateTo({
-      url: '../list/list'
+      url: '../manager/myview'
     })
   }
 })
