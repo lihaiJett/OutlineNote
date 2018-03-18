@@ -1,0 +1,15 @@
+/* pages/manager/myview.wxss */
+.textarea_a {
+    color: black;
+    height: 30px;
+    max-height: 100px;
+}
+.first_num {
+    color:red;
+}
+.second_item {
+    display: flex;
+}
+.second_index {
+    width: 2rem;
+}
