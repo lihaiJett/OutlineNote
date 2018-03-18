@@ -1,0 +1,2 @@
+# OutlineNote
+note easy application
