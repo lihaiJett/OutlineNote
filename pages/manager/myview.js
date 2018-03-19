@@ -4,12 +4,10 @@ var EssayItem = function (n, c) {
   var E = {};
   E.key = n;
   E.num = n;
-  E.hasChild=true;
-  E.content = c;
   if(c instanceof Array){
-    E.hasChild = true;
+    E.children = c;
   }else{
-    E.hasChild = false;
+    E.content = c;
   }
   return E;
 }
@@ -25,22 +23,18 @@ Page({
     var firstI = parseInt(e.currentTarget.id);
     console.log(firstI);
     var item = EssayItem(1,1);
-    item.num = this.data.EssayList.length +1;
+    item.num = this.data.EssayList[firstI].children.length +1;
     item.key = item.num-1;
-    this.data.EssayList[firstI].content.push(item);
-    this.data.EssayList[firstI].hasChild = true;
+    this.data.EssayList[firstI].children.push(item);
     this.setData({
       EssayList: this.data.EssayList
     } );  
   },
   add2: function (e) {
-    var index = 1;
-    var ed = this.data.EssayList[index];
-    var item = EssayItem(1, 1);
-    item.num = ed.content.length + 1;
-    item.key = index+"."+(item.num-1);
-    ed.content.push(item);
-
+    var item = EssayItem(1, []);
+    item.num = this.data.EssayList.length + 1;
+    item.key = item.num-1;
+    this.data.EssayList.push(item);
     // var param = {};
     // var string1 = "EssayList[" + index + "].content[1]";
     // param[string1] = 'changed data';
@@ -49,14 +43,12 @@ Page({
       EssayList: this.data.EssayList
     });
   },
-  bindChange:function(e){
+  bindInput:function(e){
     // inputContent[e.currentTarget.id] = e.detail.value
     var index = e.currentTarget.id.split('.');
     var firstI = parseInt(index[0]);
-    var secondI = parseInt(index[1]);
-    console.log(index[0] + "," + String(this.data.EssayList[firstI].content[secondI].num) + "," + index[1] + "___" + e.detail.value);
-     
-    this.data.EssayList[firstI].content[secondI].content = ""+e.detail.value;
+    var secondI = parseInt(index[1]);     
+    this.data.EssayList[firstI].children[secondI].content = ""+e.detail.value;
     
   },
   /**
@@ -65,23 +57,20 @@ Page({
   onLoad: function (options) {
     var mEssayList = [
       {
-        key:0,
+        key:"0",
         num:1,
-        content:[
+        children:[
           {
-            key: 0.0,
+            key: "0.0",
             num: 1,
-            content: "xxx",
-            hasChild: false
+            content: "xxx"
           }
         ],
-        hasChild:true
       },
       {
-        key: 1,
+        key: "1",
         num: 2,
-        content: [],
-        hasChild: false
+        children: []
       }
     ];
     this.setData(

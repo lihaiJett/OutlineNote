@@ -4,7 +4,8 @@
     "pages/logs/logs",
     "pages/manager/myview",
     "pages/list/list",
-    "pages/add/add"
+    "pages/add/add",
+    "pages/move_test/moveable"
   ],
   "window": {
     "backgroundTextStyle": "light",

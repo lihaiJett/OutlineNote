@@ -1,13 +1,13 @@
 <!--pages/manager/myview.wxml-->
-<view wx:for="{{EssayList}}" wx:for-item="firstitem" wx:key="key">
+<view wx:for="{{EssayList}}" wx:for-item="firstitem" wx:key="{{firstitem.key}}">
 <text class="first_num">{{firstitem.num}}</text>
 
-  <view class="first_item" wx:if='{{firstitem.hasChild}}'>
-   <view class="second_item" wx:for="{{firstitem.content}}" wx:for-item="seconditem" wx:key="key" >
+   <view class="second_item" wx:for="{{firstitem.children}}" wx:for-item="seconditem" wx:key="key" >
     <text class="second_index">{{seconditem.num}}. </text>
-    <textarea id="{{seconditem.key}}" bindinput='bindChange' auto-height='true' class='textarea_a' wx:key="firstitem.key" value='{{seconditem.content}}'></textarea>
+    <textarea id="{{seconditem.key}}" bindinput='bindInput' auto-height='true' class='textarea_a' wx:key="{{firstitem.key}}" value='{{seconditem.content}}'></textarea>
     </view> 
-  </view>
+
+
     <button id="{{firstitem.key}}" bindtap='add1' >增加1</button>
 </view>
 
