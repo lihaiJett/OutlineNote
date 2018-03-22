@@ -2,8 +2,6 @@
 
 var EssayItem = function (n, c) {
   var E = {};
-  E.key = n;
-  E.num = n;
   if(c instanceof Array){
     E.children = c;
   }else{
@@ -12,28 +10,49 @@ var EssayItem = function (n, c) {
   return E;
 }
 Page({
-
+  // var mEssayList = [
+  //   {
+  //     children: [
+  //       {
+  //         content: "xxx"
+  //       }
+  //     ],
+  //   }
+  // ];
+  // this.setData(
+  //   {
+  //     EssayList: mEssayList
+  //   }
+  // );
   /**
    * 页面的初始数据
    */
   data: {
-    EssayList: {}
+    id:1,
+    EssayList: [{
+          
+      children: [
+        {
+          content: "xxx"
+        }
+      ],
+    
+    }]
+
   },
-  add1: function (e) {
+  add_second: function (e) {
     var firstI = parseInt(e.currentTarget.id);
     console.log(firstI);
     var item = EssayItem(1,1);
-    item.num = this.data.EssayList[firstI].children.length +1;
-    item.key = item.num-1;
     this.data.EssayList[firstI].children.push(item);
     this.setData({
       EssayList: this.data.EssayList
-    } );  
+    } );   
   },
-  add2: function (e) {
-    var item = EssayItem(1, []);
-    item.num = this.data.EssayList.length + 1;
-    item.key = item.num-1;
+  add_first: function (e) {
+    var item = EssayItem(1, [
+       EssayItem(1,"")
+       ]);
     this.data.EssayList.push(item);
     // var param = {};
     // var string1 = "EssayList[" + index + "].content[1]";
@@ -46,6 +65,7 @@ Page({
   bindInput:function(e){
     // inputContent[e.currentTarget.id] = e.detail.value
     var index = e.currentTarget.id.split('.');
+    console.log(index);
     var firstI = parseInt(index[0]);
     var secondI = parseInt(index[1]);     
     this.data.EssayList[firstI].children[secondI].content = ""+e.detail.value;
@@ -55,29 +75,16 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    var mEssayList = [
-      {
-        key:"0",
-        num:1,
-        children:[
-          {
-            key: "0.0",
-            num: 1,
-            content: "xxx"
-          }
-        ],
-      },
-      {
-        key: "1",
-        num: 2,
-        children: []
-      }
-    ];
-    this.setData(
-      {
-        EssayList: mEssayList
-      }
-    );
+    //var id = e.id;
+    var id = 1;
+    if (id) {
+      getData(id, this);
+    } else {
+      this.setData({
+        id: Date.now()
+      })
+    }
+    
   },
 
   /**
@@ -158,5 +165,55 @@ Page({
     //   }
     // })
   }
+
+  ,
+  save:function(e){
+    
+    saveValue(this);
+  }
 })
 
+/**
+ * 根据跳转的url中的id获取编辑信息回填
+ */
+function getData(id, page) {
+  var arr = wx.getStorageSync('txt');
+  console.log(arr);
+  if (arr.length) {
+    arr.forEach((item) => {
+      if (item.id == id) {
+        page.setData({
+          id: item.id,
+          EssayList: item.content
+        })
+      }
+    })
+  }
+}
+
+/**
+ * 设置填写的信息，分编辑、新增
+ */
+function saveValue(page) {
+  var arr = wx.getStorageSync('txt');
+  var data = [], flag = true;
+  if (arr.length) {
+    arr.forEach(item => {
+      if (item.id == page.data.id) {
+        item.time = Date.now();
+        item.content = page.data.EssayList;
+        flag = false;
+      }
+      data.push(item);
+    })
+  }
+  if (flag) {
+    var item = {
+      id :page.data.id,
+      content :page.data.EssayList
+    };
+    data.push(item); 
+  }
+  console.log(data);
+  wx.setStorageSync('txt', data);
+}

@@ -53,7 +53,7 @@ Page({
   },
   toMyView: function () {
     wx.navigateTo({
-      url: '../move_test/moveable'
+      url: '../manager/myview'
     })
   }
 })

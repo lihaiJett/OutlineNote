@@ -40,7 +40,7 @@ Page({
    */
   add() {
     wx.navigateTo({
-      url: '../add/add',
+      url: '../manager/myview',
     })
   }
 })

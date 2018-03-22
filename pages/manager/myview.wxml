@@ -1,14 +1,16 @@
 <!--pages/manager/myview.wxml-->
-<view wx:for="{{EssayList}}" wx:for-item="firstitem" wx:key="{{firstitem.key}}">
-<text class="first_num">{{firstitem.num}}</text>
+<text>{{id}}___</text> 
+<button bindtap='save' >保存</button>
+<view wx:for="{{EssayList}}" wx:for-item="firstitem" wx:key="{{idx1}}" wx:for-index="idx1">
+<text class="first_num">{{idx1}}</text>
 
-   <view class="second_item" wx:for="{{firstitem.children}}" wx:for-item="seconditem" wx:key="key" >
-    <text class="second_index">{{seconditem.num}}. </text>
-    <textarea id="{{seconditem.key}}" bindinput='bindInput' auto-height='true' class='textarea_a' wx:key="{{firstitem.key}}" value='{{seconditem.content}}'></textarea>
+   <view class="second_item" wx:for="{{firstitem.children}}" wx:for-item="seconditem" wx:key="key" wx:for-index="idx2" >
+    <text class="second_index">{{idx2+1}}</text>
+    <textarea id="{{idx1}}.{{idx2}}" bindinput='bindInput' auto-height='true' class='textarea_a' wx:key="{{idx2 + 1}}. {{idx2+1}}" value='{{seconditem.content}}'></textarea>
     </view> 
 
 
-    <button id="{{firstitem.key}}" bindtap='add1' >增加1</button>
+    <button id="{{idx1}}" bindtap='add_second' >增加1</button>
 </view>
 
-<button bindtap='add2' >增加一</button>
+<button bindtap='add_first' >增加一</button>
