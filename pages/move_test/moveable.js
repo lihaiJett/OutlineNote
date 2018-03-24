@@ -8,7 +8,7 @@ Page({
     mainx: 0,
     content: [{ content: 11, id: 1 }, { content: 22, id: 2 }, { content: 33, id: 3 }, { content: 44, id: 4 }, { content: 55, id: 5 }],
     start: { x: 0, y: 0 }
-  },
+  }, 
   movestart: function (e) {
     currindex = e.target.dataset.index;
     x = e.touches[0].clientX;

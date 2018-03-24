@@ -2,7 +2,7 @@
   "pages": [
     "pages/index/index",
     "pages/logs/logs",
-    "pages/manager/myview",
+    "pages/editor/myview",
     "pages/list/list",
     "pages/add/add",
     "pages/move_test/moveable"

@@ -1,0 +1,18 @@
+<!--pages/manager/myview.wxml-->
+<button bindtap='copyTBL' >复制到粘贴板</button> 
+<view class="first_item" wx:for="{{EssayList}}" wx:for-item="firstitem" wx:key="{{idx1}}" wx:for-index="idx1">
+<view class="first_num"  id="{{idx1}}" bindlongpress='add_second' >
+  <text class="first_num_text">{{idx1}}. </text>
+  <button class="first_num_btn btn" id="{{idx1}}" bindtap='add_second' >增加1</button>
+</view>
+
+    <view class="second_item" wx:for="{{firstitem.children}}" wx:for-item="seconditem" wx:key="key" wx:for-index="idx2" >
+      <text class="second_index">({{idx2+1}}) </text>
+      <textarea id="{{idx1}}.{{idx2}}" focus="true" bindinput='bindInput' auto-height='true' class='textarea_a' wx:key="{{idx2 + 1}}. {{idx2+1}}" value='{{seconditem.content}}'></textarea>
+    </view>  
+
+ 
+   
+</view>
+
+<button class="btn" bindtap="add_first" >增加一</button>

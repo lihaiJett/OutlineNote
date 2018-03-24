@@ -1,5 +1,5 @@
 // pages/manager/myview.js
-
+var ConvertTool = require('../../utils/ConvertTool');
 var EssayItem = function (n, c) {
   var E = {};
   if(c instanceof Array){
@@ -10,20 +10,6 @@ var EssayItem = function (n, c) {
   return E;
 }
 Page({
-  // var mEssayList = [
-  //   {
-  //     children: [
-  //       {
-  //         content: "xxx"
-  //       }
-  //     ],
-  //   }
-  // ];
-  // this.setData(
-  //   {
-  //     EssayList: mEssayList
-  //   }
-  // );
   /**
    * 页面的初始数据
    */
@@ -65,7 +51,6 @@ Page({
   bindInput:function(e){
     // inputContent[e.currentTarget.id] = e.detail.value
     var index = e.currentTarget.id.split('.');
-    console.log(index);
     var firstI = parseInt(index[0]);
     var secondI = parseInt(index[1]);     
     this.data.EssayList[firstI].children[secondI].content = ""+e.detail.value;
@@ -75,8 +60,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    //var id = e.id;
-    var id = 1;
+    var id = options.id;
     if (id) {
       getData(id, this);
     } else {
@@ -112,7 +96,7 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-  
+    saveValue(this);
   },
 
   /**
@@ -139,38 +123,30 @@ Page({
     var that = this
     wx.getSavedFileList({
       success: function (res) {
-        
-
-        // wx.showModal({
-        //   title: '提示',
-        //   content: "11"+res.fileList,
-        //   success: function (res) {
-        //     if (res.confirm) {
-        //       console.log('用户点击确定')
-        //     } else if (res.cancel) {
-        //       console.log('用户点击取消')
-        //     }
-        //   }
-        // })
       }
     })
-    // wx.chooseVideo({
-    //   sourceType: ['album', 'camera'],
-    //   maxDuration: 60,
-    //   camera: 'back',
-    //   success: function (res) {
-    //     that.setData({
-    //       src: res.tempFilePath
-    //     })
-    //   }
-    // })
-  }
-
-  ,
-  save:function(e){
-    
-    saveValue(this);
-  }
+  },
+copyTBL: function (e) {
+    var self = this;
+    wx.setClipboardData({
+      // data: ConvertTool.mapToJson(ConvertTool.objToStrMap (self.data.EssayList)),
+      data: getDataString1(self),
+      success: function (res) {
+        // self.setData({copyTip:true}),  
+        wx.showModal({
+          title: '提示',
+          content: '复制成功',
+          success: function (res) {
+            if (res.confirm) {
+              console.log('确定')
+            } else if (res.cancel) {
+              console.log('取消')
+            }
+          }
+        })
+      }
+    });
+  }  
 })
 
 /**
@@ -210,10 +186,32 @@ function saveValue(page) {
   if (flag) {
     var item = {
       id :page.data.id,
+      time: Date.now(),
       content :page.data.EssayList
     };
     data.push(item); 
   }
-  console.log(data);
   wx.setStorageSync('txt', data);
+}
+
+function getDataString1(page) {
+  var arr = page.data.EssayList;
+  console.log(arr);
+  var s = "";
+  if (arr.length) {
+    var first_index = 1;
+    arr.forEach((item) => {
+      s += first_index + ". \r\n";
+      if (item.children){
+        var second_index = 1;
+        item.children.forEach((item) => {
+          s += "("+second_index +") "+ item.content+ "\r\n";
+          second_index++;
+        }
+        );
+      }
+      first_index ++;
+    })
+  }
+  return s;
 }

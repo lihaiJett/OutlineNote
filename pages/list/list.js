@@ -31,7 +31,7 @@ Page({
     var id = e.currentTarget.dataset.id;
     // 跳转 navigateTo
     wx.navigateTo({
-      url: '../add/add?id=' + id
+      url: '../editor/myview?id=' + id
     })
   },
 
@@ -40,7 +40,7 @@ Page({
    */
   add() {
     wx.navigateTo({
-      url: '../manager/myview',
+      url: '../editor/myview',
     })
   }
 })
