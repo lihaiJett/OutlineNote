@@ -49,7 +49,6 @@ Page({
     });
   },
   bindInput:function(e){
-    // inputContent[e.currentTarget.id] = e.detail.value
     var index = e.currentTarget.id.split('.');
     var firstI = parseInt(index[0]);
     var secondI = parseInt(index[1]);     
@@ -194,6 +193,9 @@ function saveValue(page) {
   wx.setStorageSync('txt', data);
 }
 
+/**
+ * 将数据变成复制到剪贴板的格式
+ */
 function getDataString1(page) {
   var arr = page.data.EssayList;
   console.log(arr);

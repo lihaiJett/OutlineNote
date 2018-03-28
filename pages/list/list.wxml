@@ -2,8 +2,8 @@
 <view class='page'>
   <!-- 每一条文字 -->
   <scroll-view scroll-y='true' class='lists'>
-    <block wx:for="{{lists}}" wx:key="*this.id">
-      <view class="list-i" bindtap="edit" data-id="{{item.id}}">
+    <block wx:for="{{lists}}" wx:key="*this.id" >
+      <view class="list-i" bindtap="bindTap" bindlongpress='bingLongTap' bindtouchstart='bindTouchStart' bindtouchend='bindTouchEnd' data-id="{{item.id}}" data-index="{{index}}">
         <view class="content">{{item.content[0].children[0].content}}</view>
         <view class='time'>创建时间：{{item.time}}</view>
       </view>

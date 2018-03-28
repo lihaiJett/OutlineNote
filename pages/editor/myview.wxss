@@ -9,7 +9,7 @@ width: 100%;
   height: 100%;
 }
 .first_num{
-  background-color: #007D3D;
+  background-color: #00edaD;
   justify-content: space-between;
   display: flex;
   widows: 100%;
@@ -44,20 +44,9 @@ width: 100%;
       background: #b3fbdb;
 }
 
-/* .btn{
-  background: yellow;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  display: table;
-  background: blue;
-  color: white;
-  border: 0px;
+.btn{
+  border-radius: 0px;
 }
-.btn text {
-  text-align: center;
-  vertical-align:middle;
-  display: table-cell;
-} */
 
 
 
