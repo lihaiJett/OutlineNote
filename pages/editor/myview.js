@@ -5,7 +5,7 @@ var EssayItem = function (n, c) {
   if(c instanceof Array){
     E.children = c;
   }else{
-    E.content = c;
+    E.content = "";
   }
   return E;
 }
@@ -14,20 +14,26 @@ Page({
    * 页面的初始数据
    */
   data: {
+    modalinput: {
+      hidden:true,
+      data_id:"",
+      text:""
+    } ,
     id:1,
     EssayList: [{
           
       children: [
         {
-          content: "xxx"
+          content: ""
         }
       ],
     
     }]
 
   },
+  //增加小点
   add_second: function (e) {
-    var firstI = parseInt(e.currentTarget.id);
+    var firstI = parseInt(e.currentTarget.dataset.id);
     console.log(firstI);
     var item = EssayItem(1,1);
     this.data.EssayList[firstI].children.push(item);
@@ -35,26 +41,18 @@ Page({
       EssayList: this.data.EssayList
     } );   
   },
+  //增加第一大点
   add_first: function (e) {
     var item = EssayItem(1, [
        EssayItem(1,"")
        ]);
     this.data.EssayList.push(item);
-    // var param = {};
-    // var string1 = "EssayList[" + index + "].content[1]";
-    // param[string1] = 'changed data';
-    // this.setData(param);  
     this.setData({
       EssayList: this.data.EssayList
     });
   },
-  bindInput:function(e){
-    var index = e.currentTarget.id.split('.');
-    var firstI = parseInt(index[0]);
-    var secondI = parseInt(index[1]);     
-    this.data.EssayList[firstI].children[secondI].content = ""+e.detail.value;
-    
-  },
+
+  
   /**
    * 生命周期函数--监听页面加载
    */
@@ -70,26 +68,7 @@ Page({
     
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
   
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-  
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-  
-  },
 
   /**
    * 生命周期函数--监听页面卸载
@@ -145,7 +124,57 @@ copyTBL: function (e) {
         })
       }
     });
-  }  
+  } ,
+
+//点击按钮痰喘指定的hiddenmodalput弹出框  
+modalinput: function (e) {
+  var index = e.currentTarget.dataset.id.split('.');
+  var firstI = parseInt(index[0]);
+  var secondI = parseInt(index[1]);
+  //this.data.EssayList[firstI].children[secondI].content = "" + e.detail.value;
+  console.log(this.data.EssayList[firstI].children[secondI]);
+  this.setData({
+    modalinput: {
+      hidden: false,
+      data_id: e.currentTarget.dataset.id,
+      text: this.data.EssayList[firstI].children[secondI].content
+    }
+  })
+},
+//取消按钮  
+cancel: function () {
+  this.setData({
+    modalinput: {
+      hidden: true,
+      data_id: "",
+      text: ""
+    }
+  })
+},
+bindInput: function (e) {
+  var index = e.currentTarget.dataset.id.split('.');
+  var firstI = parseInt(index[0]);
+  var secondI = parseInt(index[1]);
+  this.data.EssayList[firstI].children[secondI].content = "" + e.detail.value;
+},
+//确认  
+confirm: function (e) {
+  var index = e.currentTarget.dataset.id.split('.');
+  var firstI = parseInt(index[0]);
+  var secondI = parseInt(index[1]);
+  // this.data.EssayList[firstI].children[secondI].content = "hjghjg";//+ e.detail.value.inputtext
+  var page = this;
+  var changeTextView = "EssayList[" + firstI + "].children[" + secondI + "].content";
+  this.setData({
+    modalinput: {
+      hidden: true,
+      data_id: "",
+      text: ""
+    },
+    EssayList: page.data.EssayList
+  })
+}  
+
 })
 
 /**

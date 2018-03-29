@@ -2,18 +2,21 @@
 <button class='btn' bindtap='copyTBL' >复制到粘贴板</button> 
 <view class="first_item" wx:for="{{EssayList}}" wx:for-item="firstitem" wx:key="{{idx1}}" wx:for-index="idx1">
 
-<view class="first_num"  id="{{idx1}}" bindlongpress='add_second' >
+<view class="first_num btn"  data-id="{{idx1}}" bindtap='add_second' >
   <text class="first_num_text">{{idx1}}. </text>
-  <view class="first_num_btn btn"><button  id="{{idx1}}" bindtap='add_second'  size='mini'>增加1</button></view>
+  <!-- <view class="first_num_btn" id="{{idx1}}" bindtap='add_second'  >+</view> -->
 </view>
 
     <view class="second_item" wx:for="{{firstitem.children}}" wx:for-item="seconditem" wx:key="key" wx:for-index="idx2" >
       <text class="second_index">({{idx2+1}}) </text>
-      <textarea id="{{idx1}}.{{idx2}}" focus="true" bindinput='bindInput' bindconfirm='bindInput' auto-height='true' class='textarea_a' wx:key="{{idx2 + 1}}. {{idx2+1}}" value='{{seconditem.content}}'></textarea>
+      <view data-id="{{idx1}}.{{idx2}}"  bindtap='modalinput' bindconfirm='bindInput' auto-height='true' class='textarea_a' wx:key="{{idx2 + 1}}. {{idx2+1}}" >{{seconditem.content}}</view>
     </view>  
 
  
    
 </view>
 
-<button class="btn" bindtap="add_first" >增加一</button>
+<button class="btn" bindtap="add_first" >+</button>
+<modal hidden="{{modalinput.hidden}}" title="" data-id="{{modalinput.data_id}}" confirm-text="提交" cancel-text="取消" bindcancel="cancel" bindconfirm="confirm">  
+    <input type='text' data-id="{{modalinput.data_id}}" bindinput='bindInput'  placeholder="请输入内容" value='{{modalinput.text}}' focus='{{!modalinput.hidden}}' />  
+</modal>  

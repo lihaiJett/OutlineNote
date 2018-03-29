@@ -8,46 +8,74 @@ width: 100%;
   width: 100%;
   height: 100%;
 }
+.first_item{
+  background-color: rgba(199,237,204,1);
+  padding: 1px;
+  /* let's use box shadows to make the button look more 3-dimensional */
+   box-shadow: 0px 2px 0px rgba(199,255,204, 1), 0px 9px 25px rgba(0, 0, 0, .7); 
+}
 .first_num{
+  margin-top: 1rem;
   background-color: #00edaD;
   justify-content: space-between;
   display: flex;
-  widows: 100%;
 }
 .first_num_text {
     color:black;
-    font-size: 1.5rem;
     align-self: flex-start;
 }
 .first_num_btn {
     align-self: flex-end;
     height: 100%;
-    max-height: 100%;
-    line-height: 100%;
     display: inline-table;
-    
+}
+.first_num_btn:button {
+    height: 50%;
 }
 
-.textarea_a {
-    color: black;
-    height: 30px;
-    max-height: 100px;
-      background: #b3fbdb;
-}
 
 .second_item {
     display: flex;
     align-items: flex-start;
+    background: #b3fbdb;
 }
 .second_index {
     width: 2rem;
-      background: #b3fbdb;
+}
+.textarea_a {
+    display:block;
+    white-space: pre-line;
+    color: black;
+    width:100%;
+    height: auto;
+    word-wrap: break-word;
+    
 }
 
 .btn{
-  border-radius: 0px;
-}
+  border-radius: 4px;
 
+  display: block;
+  position: relative;
+  color: rgba(255, 255, 255, 1);
+  text-decoration: none;
+  background-color: rgba(219, 87, 51, 1);
+  font-family: "Microsoft YaHei", 微软雅黑, 宋体;
+  font-weight: 700;
+  padding: 4px;
+  /* let's use box shadows to make the button look more 3-dimensional */
+   box-shadow: 0px 2px 0px rgba(219, 31, 5, 1), 0px 9px 25px rgba(0, 0, 0, .7); 
+
+  text-align: center;
+  -webkit-transition: all .1s ease;
+  -moz-transition: all .1s ease;
+  transition: all .1s ease;
+}
+ .btn:active{
+  box-shadow: 0px 3px 0px rgba(219, 31, 5, 1), 0px 3px 6px rgba(0, 0, 0, .9); 
+ position: relative;
+ top: 2px;
+} 
 
 
 

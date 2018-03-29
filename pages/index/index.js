@@ -1,13 +1,32 @@
 //index.js
 //获取应用实例
 const app = getApp()
+var tipsArr = [[
+  "长按列表条目可弹出菜单",
+  "每天一苹果，医生远离我",
+  "点击我，我就切给你看"
+],[]];
+var curArrNum = 0;
+function getNextTips() {
+  var curArr = tipsArr[curArrNum];
+  if(0 == curArr.length){
+    curArrNum = (curArrNum+1)%2;
+    curArr = tipsArr[curArrNum];
+  }
+  var random = Math.floor(Math.random() * curArr.length);
+  var value = curArr[random];
+  curArr.splice(random,1);
+  tipsArr[(curArrNum + 1) % 2] .push(value);
+  return value;
+}
 
 Page({
   data: {
-    motto: 'Hello World',
+    motto: '列出来',
     userInfo: {},
     hasUserInfo: false,
-    canIUse: wx.canIUse('button.open-type.getUserInfo')
+    canIUse: wx.canIUse('button.open-type.getUserInfo'),
+    tips: getNextTips()
   },
   //事件处理函数
   bindViewTap: function() {
@@ -43,6 +62,10 @@ Page({
       })
     }
   },
+  onShow:function(e){
+    var param = { "tips": getNextTips() };
+    this.setData(param);
+  },
   getUserInfo: function(e) {
     console.log(e)
     app.globalData.userInfo = e.detail.userInfo
@@ -51,9 +74,15 @@ Page({
       hasUserInfo: true
     })
   },
-  toMyView: function () {
+  toListPage: function () {
     wx.navigateTo({
       url: '../list/list'
     })
+  },
+  changeTips: function () {
+    var param = { "tips": getNextTips() };
+    this.setData(param);
   }
 })
+
+
