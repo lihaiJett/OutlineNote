@@ -113,8 +113,39 @@ copyTBL: function (e) {
     });
   } ,
 moveto_second:function(e){
-  console.log(move_temp);
-  console.log(e.currentTarget.dataset.id);
+  var index = e.currentTarget.dataset.id.split('.');
+  var to_firstI = parseInt(index[0]);
+  var to_secondI = parseInt(index[1]);
+  var from_firstI = this.data.move_temp.move_temp_firstI;
+  var from_secondI = this.data.move_temp.move_temp_secondI;
+
+  var temp = this.data.EssayList[from_firstI].children[from_secondI];
+  this.data.EssayList[from_firstI].children.splice(from_secondI, 1);
+  this.data.EssayList[to_firstI].children.splice(to_secondI, 0, temp);
+
+  this.setData({
+    move_temp: {
+      move_temp_firstI: -1,
+      move_temp_secondI: -1
+    },
+    EssayList: this.data.EssayList
+  });
+}, 
+first_move: function (e) {
+  var to_firstI = e.currentTarget.dataset.id;
+  var from_firstI = this.data.move_temp.move_temp_firstI;
+
+  var temp = this.data.EssayList[from_firstI];
+  this.data.EssayList.splice(from_firstI, 1);
+  this.data.EssayList.splice(to_firstI, 0, temp);
+
+  this.setData({
+    move_temp: {
+      move_temp_firstI: -1,
+      move_temp_secondI: -1
+    },
+    EssayList: this.data.EssayList
+  });
 }
 ,
 bindTouchStart: function (e) {
@@ -167,7 +198,7 @@ second_longtap: function (e) {
     var firstI = e.currentTarget.dataset.id;
     var page = this;
     wx.showActionSheet({
-      itemList: ['删除' + (firstI + 1) , '修改'],
+      itemList: ['删除' + (firstI + 1), '修改', '移动',],
       success: function (res) {
         switch (res.tapIndex) {
           case 0://删除
@@ -186,6 +217,13 @@ second_longtap: function (e) {
             })
             break;
           case 2:
+            page.data.move_temp.move_temp_firstI = firstI;
+            page.setData({
+              move_temp: {
+                move_temp_firstI: firstI,
+                move_temp_secondI: -1
+              }
+            });
             break;
         }
         console.log(res.tapIndex)

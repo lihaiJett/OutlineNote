@@ -1,21 +1,32 @@
 <!--pages/manager/myview.wxml-->
 <button class='btn' bindtap='copyTBL' >复制到粘贴板</button> 
-<view class="first_item" wx:for="{{EssayList}}" wx:for-item="firstitem" wx:key="{{idx1}}" wx:for-index="idx1">
+
+ <!-- first位置调整按钮 -->
+      <view hidden='{{!(move_temp.move_temp_firstI!=-1 && move_temp.move_temp_secondI==-1)}}' bindtap='first_move' data-id="0"  class='first_move'>0</view>
+
+<view class="first_item" wx:for="{{EssayList}}" wx:for-item="firstitem" wx:key="{{idx1}}" wx:for-index="idx1">    
 
   <view class="first_num"  data-id="{{idx1}}" bindtap='add_second' bindlongpress='first_longtap' bindtouchstart='bindTouchStart' bindtouchend='bindTouchEnd' >
     <text class="first_num_text">{{idx1+1}}. {{firstitem.content}}</text>
     <!-- <view class="first_num_btn" id="{{idx1}}" bindtap='add_second'  >+</view> -->
   </view>
 
-     <view class='second_move'>0</view>
+      <!-- second位置调整按钮 -->
+     <view hidden='{{move_temp.move_temp_firstI==-1||move_temp.move_temp_secondI==-1}}' bindtap='moveto_second' class='second_move' data-id="{{idx1}}.0" >0</view>
+
     <view  wx:for="{{firstitem.children}}" wx:for-item="seconditem" wx:key="key" wx:for-index="idx2">
       <view class="second_item" bindlongpress='second_longtap' bindtouchstart='bindTouchStart' bindtouchend='bindTouchEnd' bindtap='modalinput'  data-id="{{idx1}}.{{idx2}}" >
       <text class="second_index">({{idx2+1}}) </text>
       <view data-id="{{idx1}}.{{idx2}}"  auto-height='true' class='textarea_a' wx:key="{{idx2 + 1}}. {{idx2+1}}" >{{seconditem.content}}</view>
       </view>
+
+      <!-- second位置调整按钮 -->
       <view hidden='{{move_temp.move_temp_firstI==-1||move_temp.move_temp_secondI==-1}}' bindtap='moveto_second' data-id="{{idx1}}.{{idx2+1}}"  class='second_move'>{{idx2+1}}</view>
+
     </view>  
 
+    <!-- first位置调整按钮 -->
+      <view hidden='{{!(move_temp.move_temp_firstI!=-1 && move_temp.move_temp_secondI==-1)}}' bindtap='first_move' data-id="{{idx1}}"  class='first_move'>{{idx1+1}}</view>
 </view>
 
 
