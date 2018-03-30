@@ -9,11 +9,16 @@ var EssayItem = function (n, c) {
   }
   return E;
 }
+
 Page({
   /**
    * 页面的初始数据
    */
   data: {
+    move_temp:{
+      move_temp_firstI:-1,
+      move_temp_secondI:-1,
+    },
     modalinput: {
       hidden:true,
       data_id:"",
@@ -107,7 +112,11 @@ copyTBL: function (e) {
       }
     });
   } ,
-
+moveto_second:function(e){
+  console.log(move_temp);
+  console.log(e.currentTarget.dataset.id);
+}
+,
 bindTouchStart: function (e) {
   this.startTime = e.timeStamp;
 },
@@ -121,7 +130,7 @@ second_longtap: function (e) {
   var firstI = parseInt(index[0]);
   var secondI = parseInt(index[1]);
   wx.showActionSheet({
-    itemList: ['删除' + (firstI+1)+".("+(secondI+1)+")", 'B', 'C'],
+    itemList: ['删除' + (firstI+1)+".("+(secondI+1)+")", '移动', 'C'],
     success: function (res) {
       switch(res.tapIndex){
         case 0://删除
@@ -132,8 +141,16 @@ second_longtap: function (e) {
           page.setData({
             EssayList: page.data.EssayList
           })
-        break;
+        break;          
         case 1:
+          page.data.move_temp.move_temp_firstI = firstI;
+          page.data.move_temp.move_temp_secondI = secondI;
+          page.setData({
+            move_temp:{
+              move_temp_firstI:firstI,
+              move_temp_secondI:secondI
+            }
+          });
         break;
         case 2:
         break;

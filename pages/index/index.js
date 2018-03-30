@@ -4,7 +4,7 @@ const app = getApp()
 var tipsArr = [[
   "长按列表条目可弹出菜单",
   "每天一苹果，医生远离我",
-  "点击我，我就切给你看"
+  "点我，我就切给你看"
 ],[]];
 var curArrNum = 0;
 function getNextTips() {
