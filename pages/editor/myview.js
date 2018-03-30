@@ -77,26 +77,6 @@ Page({
     saveValue(this);
   },
 
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-  
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-  
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-  
-  },
   bindButtonTap: function () {
     var that = this
     wx.getSavedFileList({
@@ -104,6 +84,8 @@ Page({
       }
     })
   },
+
+
 copyTBL: function (e) {
     var self = this;
     wx.setClipboardData({
@@ -126,20 +108,92 @@ copyTBL: function (e) {
     });
   } ,
 
-//点击按钮痰喘指定的hiddenmodalput弹出框  
-modalinput: function (e) {
+bindTouchStart: function (e) {
+  this.startTime = e.timeStamp;
+},
+bindTouchEnd: function (e) {
+  this.endTime = e.timeStamp;
+},
+//子项点击和长按事件
+second_longtap: function (e) {
+  var page = this;
   var index = e.currentTarget.dataset.id.split('.');
   var firstI = parseInt(index[0]);
   var secondI = parseInt(index[1]);
-  //this.data.EssayList[firstI].children[secondI].content = "" + e.detail.value;
-  console.log(this.data.EssayList[firstI].children[secondI]);
-  this.setData({
-    modalinput: {
-      hidden: false,
-      data_id: e.currentTarget.dataset.id,
-      text: this.data.EssayList[firstI].children[secondI].content
+  wx.showActionSheet({
+    itemList: ['删除' + (firstI+1)+".("+(secondI+1)+")", 'B', 'C'],
+    success: function (res) {
+      switch(res.tapIndex){
+        case 0://删除
+          page.data.EssayList[firstI].children.splice(secondI,1);
+          if (page.data.EssayList[firstI].children.length == 0){
+            page.data.EssayList.splice(firstI,1);
+          }
+          page.setData({
+            EssayList: page.data.EssayList
+          })
+        break;
+        case 1:
+        break;
+        case 2:
+        break;
+      }
+      console.log(res.tapIndex)
+    },
+    fail: function (res) {
+      console.log(res.errMsg)
     }
   })
+},
+//标题的长按修改
+  first_longtap: function(e){
+    var firstI = e.currentTarget.dataset.id;
+    var page = this;
+    wx.showActionSheet({
+      itemList: ['删除' + (firstI + 1) , '修改'],
+      success: function (res) {
+        switch (res.tapIndex) {
+          case 0://删除
+            page.data.EssayList.splice(firstI, 1);
+            page.setData({
+              EssayList: page.data.EssayList
+            })
+            break;
+          case 1:
+            page.setData({
+              modalinput: {
+                hidden: false,
+                data_id: firstI.toString(),
+                text: page.data.EssayList[firstI].content
+              }
+            })
+            break;
+          case 2:
+            break;
+        }
+        console.log(res.tapIndex)
+      },
+      fail: function (res) {
+        console.log(res.errMsg)
+      }
+    })
+  },
+//点击按钮弹出指定的hiddenmodalput弹出框  
+modalinput: function (e) {
+  if (this.endTime - this.startTime < 350) {
+    var index = e.currentTarget.dataset.id.split('.');
+    var firstI = parseInt(index[0]);
+    var secondI = parseInt(index[1]);
+    //this.data.EssayList[firstI].children[secondI].content = "" + e.detail.value;
+    console.log(this.data.EssayList[firstI].children[secondI]);
+    this.setData({
+      modalinput: {
+        hidden: false,
+        data_id: e.currentTarget.dataset.id,
+        text: this.data.EssayList[firstI].children[secondI].content
+      }
+    })
+  }
 },
 //取消按钮  
 cancel: function () {
@@ -152,19 +206,22 @@ cancel: function () {
   })
 },
 bindInput: function (e) {
+  console.log(e);
   var index = e.currentTarget.dataset.id.split('.');
-  var firstI = parseInt(index[0]);
-  var secondI = parseInt(index[1]);
-  this.data.EssayList[firstI].children[secondI].content = "" + e.detail.value;
+  if (index.length == 1) {
+    var firstI = parseInt(index[0]);
+    this.data.EssayList[firstI].content = "" + e.detail.value;
+  } else {
+    var firstI = parseInt(index[0]);
+    var secondI = parseInt(index[1]);
+    this.data.EssayList[firstI].children[secondI].content = "" + e.detail.value;
+  }
+
 },
 //确认  
 confirm: function (e) {
-  var index = e.currentTarget.dataset.id.split('.');
-  var firstI = parseInt(index[0]);
-  var secondI = parseInt(index[1]);
-  // this.data.EssayList[firstI].children[secondI].content = "hjghjg";//+ e.detail.value.inputtext
+
   var page = this;
-  var changeTextView = "EssayList[" + firstI + "].children[" + secondI + "].content";
   this.setData({
     modalinput: {
       hidden: true,
@@ -236,7 +293,7 @@ function getDataString1(page) {
       if (item.children){
         var second_index = 1;
         item.children.forEach((item) => {
-          s += "("+second_index +") "+ item.content+ "\r\n";
+          s += "\t("+second_index +") "+ item.content+ "\r\n";
           second_index++;
         }
         );

@@ -9,14 +9,17 @@ var tipsArr = [[
 var curArrNum = 0;
 function getNextTips() {
   var curArr = tipsArr[curArrNum];
-  if(0 == curArr.length){
+  var value ;
+  if(1 == curArr.length){
+    value = curArr[0];
     curArrNum = (curArrNum+1)%2;
     curArr = tipsArr[curArrNum];
+  }else{
+    var random = Math.floor(Math.random() * curArr.length);
+    value = curArr[random];
+    tipsArr[curArrNum].splice(random, 1);
+    tipsArr[(curArrNum + 1) % 2].push(value);
   }
-  var random = Math.floor(Math.random() * curArr.length);
-  var value = curArr[random];
-  curArr.splice(random,1);
-  tipsArr[(curArrNum + 1) % 2] .push(value);
   return value;
 }
 
