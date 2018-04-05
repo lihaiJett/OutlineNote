@@ -1,5 +1,6 @@
 // pages/manager/myview.js
 var ConvertTool = require('../../utils/ConvertTool');
+var StorageTool = require('../../utils/storage');
 var EssayItem = function (n, c) {
   var E = {};
   if(c instanceof Array){
@@ -24,7 +25,8 @@ Page({
       data_id:"",
       text:""
     } ,
-    id:1,
+    id:0,
+    title:"Essay",
     EssayList: [{
           
       children: [
@@ -64,13 +66,17 @@ Page({
   onLoad: function (options) {
     var id = options.id;
     if (id) {
-      getData(id, this);
+      var eassy_data = StorageTool.getEssayData(id);
+      this.setData({
+        id: eassy_data.id,
+        title: eassy_data.title,
+        EssayList: eassy_data.content
+      });
     } else {
       this.setData({
         id: Date.now()
       })
     }
-    
   },
 
   
@@ -79,15 +85,20 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-    saveValue(this);
+  },
+  /**
+   * 保存
+   */
+  bindSaveEssay:function(){
+    saveEssay(this)
   },
 
-  bindButtonTap: function () {
-    var that = this
-    wx.getSavedFileList({
-      success: function (res) {
-      }
-    })
+  /**
+   * 标题的输入
+   */
+  bindTitleInput: function (e) {
+    console.log(e.detail.value);
+    this.data.title = e.detail.value;
   },
 
 
@@ -241,11 +252,12 @@ modalinput: function (e) {
     var secondI = parseInt(index[1]);
     //this.data.EssayList[firstI].children[secondI].content = "" + e.detail.value;
     console.log(this.data.EssayList[firstI].children[secondI]);
+    var content = this.data.EssayList[firstI].children[secondI].content;
     this.setData({
       modalinput: {
         hidden: false,
         data_id: e.currentTarget.dataset.id,
-        text: this.data.EssayList[firstI].children[secondI].content
+        text: content
       }
     })
   }
@@ -261,7 +273,7 @@ cancel: function () {
   })
 },
 bindInput: function (e) {
-  console.log(e);
+  //console.log(e);
   var index = e.currentTarget.dataset.id.split('.');
   if (index.length == 1) {
     var firstI = parseInt(index[0]);
@@ -289,50 +301,15 @@ confirm: function (e) {
 
 })
 
-/**
- * 根据跳转的url中的id获取编辑信息回填
- */
-function getData(id, page) {
-  var arr = wx.getStorageSync('txt');
-  console.log(arr);
-  if (arr.length) {
-    arr.forEach((item) => {
-      if (item.id == id) {
-        page.setData({
-          id: item.id,
-          EssayList: item.content
-        })
-      }
-    })
-  }
+function saveEssay(page){
+  StorageTool.saveEssayList(page.data.id, page.data.EssayList, page.data.title);
+  wx.showToast({
+    title: '保存成功',
+  });
 }
 
-/**
- * 设置填写的信息，分编辑、新增
- */
-function saveValue(page) {
-  var arr = wx.getStorageSync('txt');
-  var data = [], flag = true;
-  if (arr.length) {
-    arr.forEach(item => {
-      if (item.id == page.data.id) {
-        item.time = Date.now();
-        item.content = page.data.EssayList;
-        flag = false;
-      }
-      data.push(item);
-    })
-  }
-  if (flag) {
-    var item = {
-      id :page.data.id,
-      time: Date.now(),
-      content :page.data.EssayList
-    };
-    data.push(item); 
-  }
-  wx.setStorageSync('txt', data);
-}
+
+
 
 /**
  * 将数据变成复制到剪贴板的格式

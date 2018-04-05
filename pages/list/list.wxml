@@ -4,7 +4,7 @@
   <scroll-view scroll-y='true' class='lists'>
     <block wx:for="{{lists}}" wx:key="*this.id" >
       <view class="list-i" bindtap="bindTap" bindlongpress='bingLongTap' bindtouchstart='bindTouchStart' bindtouchend='bindTouchEnd' data-id="{{item.id}}" data-index="{{index}}">
-        <view class="content">{{item.content[0].children[0].content}}</view>
+        <view class="content">{{item.title}}</view>
         <view class='time'>最后修改时间：{{item.time}}</view>
       </view>
     </block>

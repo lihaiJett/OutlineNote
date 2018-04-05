@@ -1,6 +1,11 @@
 <!--index.wxml-->
 <view class="container">
-
+  <view class='icon_parent'><image src='../../img/icon.png' class="icon"></image>
+  <view class="usermotto">
+    <text class="user-motto">{{motto}}</text>
+  </view>
+  </view>
+  
   <!-- <view class="userinfo">
     <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
     <block wx:else>
@@ -9,11 +14,11 @@
     </block>
   </view> -->
 
-  <view class="usermotto">
-    <text class="user-motto">{{motto}}</text>
+
+  <view class="btn_list" >
+    <view class="entry_btn" bindtap="toListPage">开始</view>
+    <!-- <view class="entry_btn" bindtap="toListPage">设置</view> -->
   </view>
-  
-  <button class="entry_btn" bindtap="toListPage">开始</button>
 
   <view class="tips">
   <text class="tex" bindtap='changeTips'>  tips: {{tips}}</text>

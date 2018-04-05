@@ -22,12 +22,30 @@ height: 100%;
   border-radius: 50%;
 }
 
+.icon {
+  width: 128rpx;
+  height: 128rpx;
+  clip-path: polygon(7% 7%, 7% 93%, 93% 93%, 93% 7%);
+  
+  transition: all 0.5s; 
+}
+.icon:hover{
+  transform:rotate(360deg);
+  clip-path: polygon(0% 0%, 0% 100%, 100% 100%, 100% 0%);
+}
 .userinfo-nickname {
   color: #aaa;
 }
 
 .usermotto {
-  margin-top: 200px;
+  margin-top: 2rem;
+  font-family: "Microsoft YaHei", 微软雅黑, 宋体;
+  text-align: center;
+}
+
+.btn_list{
+  align-self: center;
+  width: 50%;
 }
 
 .entry_btn{
@@ -41,18 +59,18 @@ height: 100%;
  padding: 4px;
  border-radius: 5px;
  /* let's use box shadows to make the button look more 3-dimensional */
- box-shadow: 0px 9px 0px rgba(219, 31, 5, 1), 0px 9px 25px rgba(0, 0, 0, .7);
- margin: 5px;
- width: 50%;
+ box-shadow: 0px 3px 0px rgba(219, 31, 5, 1), 0px 9px 25px rgba(0, 0, 0, .7);
+ margin-top: 5%;
+ width: 100%;
  text-align: center;
  -webkit-transition: all .1s ease;
  -moz-transition: all .1s ease;
  transition: all .1s ease;
 }
 .entry_btn:active{
- box-shadow: 0px 3px 0px rgba(219, 31, 5, 1), 0px 3px 19px rgba(0, 0, 0, .9);
+ box-shadow: 0px 1px 0px rgba(219, 31, 5, 1), 0px 3px 10px rgba(0, 0, 0, .9);
  position: relative;
- top: 6px;
+ top: 3px;
 }
 
 .tips{
@@ -71,7 +89,7 @@ height: 100%;
   padding: 4px;
   border-radius: 5px;
   /* let's use box shadows to make the button look more 3-dimensional */
-  box-shadow: 0px 2px 0px rgba(245, 143, 0, 1), 0px 9px 25px rgba(0, 0, 0, .7);
+  box-shadow:  0px 9px 25px rgba(0, 0, 0, .7);
   margin: 1px auto;
   width: 95%;
   height: 10%;
@@ -81,7 +99,7 @@ height: 100%;
   transition: all .1s ease;
 }
 .tex:active{
-  box-shadow: 0px 3px 0px rgba(235, 133, 0, 1), 0px 3px 6px rgba(0, 0, 0, .9);
+  box-shadow: 0px 9px 25px rgba(0, 0, 0, .7);
   position: relative;
-  transform: scale(0.95);
+  transform: scale(0.99);
 }

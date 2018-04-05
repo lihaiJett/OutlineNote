@@ -1,5 +1,5 @@
 var util = require('../../utils/util');
-
+var StorageTool = require('../../utils/storage');
 // pages/list/list.js
 Page({
 
@@ -80,7 +80,7 @@ Page({
  * 处理初始化页面列表数据
  */
 function initData (page) {
-  var arr = wx.getStorageSync('txt');
+  var arr = StorageTool.getEassyList();
   console.log(arr);
   if (arr.length) { 
     arr.forEach((item, i) => {
@@ -93,10 +93,10 @@ function initData (page) {
   }
 }
 function deleteOne(page,index){
-  var arr = wx.getStorageSync('txt');
+  var arr = StorageTool.getEassyList();
   console.log(arr);
   arr.splice(index, 1);
-  wx.setStorageSync('txt', arr);
+  StorageTool.saveEassyList( arr);
   page.setData({
     lists: arr
   })

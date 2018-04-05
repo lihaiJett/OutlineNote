@@ -4,7 +4,9 @@ const app = getApp()
 var tipsArr = [[
   "长按列表条目可弹出菜单",
   "每天一苹果，医生远离我",
-  "点我，我就切给你看"
+  "点我，我就切给你看",
+  "笔记缓存于本地，不会上传到网络",
+  "随手点击保存，避免数据丢失"
 ],[]];
 var curArrNum = 0;
 function getNextTips() {

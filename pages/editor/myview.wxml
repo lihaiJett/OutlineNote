@@ -1,5 +1,9 @@
 <!--pages/manager/myview.wxml-->
-<button class='btn' bindtap='copyTBL' >复制到粘贴板</button> 
+<view class='top'>
+  <button class='btn' bindtap='copyTBL' >复制到粘贴板</button> 
+  <button class='btn' bindtap='bindSaveEssay' >保存</button> 
+</view>
+<input value='{{title}}' bindinput='bindTitleInput' ></input>
 
  <!-- first位置调整按钮 -->
       <view hidden='{{!(move_temp.move_temp_firstI!=-1 && move_temp.move_temp_secondI==-1)}}' bindtap='first_move' data-id="0"  class='first_move'>0</view>
