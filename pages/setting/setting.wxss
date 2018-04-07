@@ -1,0 +1,30 @@
+/* pages/setting/setting.wxss */
+page{
+width: 100%;
+height: 100%;
+}
+.body-view{
+  display: table;
+  margin: 1%;
+  margin-top: 5%;
+}
+.tr{
+  padding: 1rem;  
+  display: flex;
+  width: 100%;
+}
+.td1{
+  align-items: center;
+  align-self: center;
+  align-content: center;
+  flex: 0 0 75%;
+}
+.td2{
+  align-items: center;
+  align-self: center;
+  align-content: center;
+  justify-content: center;
+  text-align: right;
+  margin-left: 2%;
+  flex: 0 0 25%;
+}

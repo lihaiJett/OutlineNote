@@ -1,41 +1,41 @@
 <!--pages/manager/myview.wxml-->
 <view class='top'>
-  <button class='btn' bindtap='copyTBL' >复制到粘贴板</button> 
+  <button class='btn' bindtap='bindCopyTBL' >复制到粘贴板</button> 
   <button class='btn' bindtap='bindSaveEssay' >保存</button> 
 </view>
 <input value='{{title}}' bindinput='bindTitleInput' ></input>
 
  <!-- first位置调整按钮 -->
-      <view hidden='{{!(move_temp.move_temp_firstI!=-1 && move_temp.move_temp_secondI==-1)}}' bindtap='first_move' data-id="0"  class='first_move'>0</view>
+      <view hidden='{{!(move_temp.move_temp_firstI!=-1 && move_temp.move_temp_secondI==-1)}}' bindtap='first_move' data-id="0"  class='first_move'>移动到这里</view>
 
 <view class="first_item" wx:for="{{EssayList}}" wx:for-item="firstitem" wx:key="{{idx1}}" wx:for-index="idx1">    
 
-  <view class="first_num"  data-id="{{idx1}}" bindtap='add_second' bindlongpress='first_longtap' bindtouchstart='bindTouchStart' bindtouchend='bindTouchEnd' >
+  <view class="first_num"  data-id="{{idx1}}" bindtap='bindAdd_second' bindlongpress='bindFirst_longtap' bindtouchstart='bindTouchStart' bindtouchend='bindTouchEnd' >
     <text class="first_num_text">{{idx1+1}}. {{firstitem.content}}</text>
-    <!-- <view class="first_num_btn" id="{{idx1}}" bindtap='add_second'  >+</view> -->
+
   </view>
 
       <!-- second位置调整按钮 -->
-     <view hidden='{{move_temp.move_temp_firstI==-1||move_temp.move_temp_secondI==-1}}' bindtap='moveto_second' class='second_move' data-id="{{idx1}}.0" >0</view>
+     <view hidden='{{move_temp.move_temp_firstI==-1||move_temp.move_temp_secondI==-1}}' bindtap='bindMoveto_second' class='second_move' data-id="{{idx1}}.0" >移动到这里</view>
 
     <view  wx:for="{{firstitem.children}}" wx:for-item="seconditem" wx:key="key" wx:for-index="idx2">
-      <view class="second_item" bindlongpress='second_longtap' bindtouchstart='bindTouchStart' bindtouchend='bindTouchEnd' bindtap='modalinput'  data-id="{{idx1}}.{{idx2}}" >
+      <view class="second_item" bindlongpress='bindSecond_longtap' bindtouchstart='bindTouchStart' bindtouchend='bindTouchEnd' bindtap='bindModalinputTap'  data-id="{{idx1}}.{{idx2}}" >
       <text class="second_index">({{idx2+1}}) </text>
       <view data-id="{{idx1}}.{{idx2}}"  auto-height='true' class='textarea_a' wx:key="{{idx2 + 1}}. {{idx2+1}}" >{{seconditem.content}}</view>
       </view>
 
       <!-- second位置调整按钮 -->
-      <view hidden='{{move_temp.move_temp_firstI==-1||move_temp.move_temp_secondI==-1}}' bindtap='moveto_second' data-id="{{idx1}}.{{idx2+1}}"  class='second_move'>{{idx2+1}}</view>
+      <view hidden='{{move_temp.move_temp_firstI==-1||move_temp.move_temp_secondI==-1}}' bindtap='bindMoveto_second' data-id="{{idx1}}.{{idx2+1}}"  class='second_move'>移动到这里</view>
 
     </view>  
 
     <!-- first位置调整按钮 -->
-      <view hidden='{{!(move_temp.move_temp_firstI!=-1 && move_temp.move_temp_secondI==-1)}}' bindtap='first_move' data-id="{{idx1}}"  class='first_move'>{{idx1+1}}</view>
+      <view hidden='{{!(move_temp.move_temp_firstI!=-1 && move_temp.move_temp_secondI==-1)}}' bindtap='first_move' data-id="{{idx1}}"  class='first_move'>移动到这里</view>
 </view>
 
 
 
-<button class="btn" bindtap="add_first" >+</button>
-<modal hidden="{{modalinput.hidden}}" title="" data-id="{{modalinput.data_id}}" confirm-text="提交" cancel-text="取消" bindcancel="cancel" bindconfirm="confirm">  
+<button class="btn" bindtap="bindAdd_first" >+</button>
+<modal hidden="{{modalinput.hidden}}" title="" data-id="{{modalinput.data_id}}" confirm-text="提交" cancel-text="取消" bindcancel="bindCancel" bindconfirm="confirm">  
     <input type='text' data-id="{{modalinput.data_id}}" bindinput='bindInput'  placeholder="请输入内容" value='{{modalinput.text}}' focus='{{!modalinput.hidden}}' />  
 </modal>  

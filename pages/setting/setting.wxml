@@ -1,0 +1,8 @@
+<!--pages/setting/setting.wxml-->
+<view class="body-view">
+  <view class="tr">
+    <view class="td1">点击导航栏后退时自动保存</view>
+    <switch class="td2" checked="{{saveOnBack}}" bindchange="switch1Change" />
+  </view>  
+</view>
+

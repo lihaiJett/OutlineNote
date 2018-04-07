@@ -1,4 +1,5 @@
 //app.js
+var Preference = require('utils/Preference');
 App({
   onLaunch: function () {
     // 展示本地存储能力
@@ -32,8 +33,19 @@ App({
         }
       }
     })
+    // 初始化设置
+    var preference = Preference.getPreference();
+    if (typeof (preference.saveOnBack) != "undefined" ) {
+      this.globalData.saveOnBack = preference.saveOnBack;
+    }
+    console.log(this.globalData);
   },
-  globalData: {
-    userInfo: null
+  globalData: { 
+    userInfo: null,
+    saveOnBack: true, 
+  },
+  setGlobalData:function(key,value){ 
+    Preference.savePreference(key, value);
+    this.globalData[key] = value;
   }
 })

@@ -84,6 +84,11 @@ Page({
       url: '../list/list'
     })
   },
+  toSetting: function (){
+    wx.navigateTo({
+      url: '../setting/setting'
+    })
+  },
   changeTips: function () {
     var param = { "tips": getNextTips() };
     this.setData(param);

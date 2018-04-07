@@ -39,7 +39,7 @@ Page({
 
   },
   //增加小点
-  add_second: function (e) {
+  bindAdd_second: function (e) {
     var firstI = parseInt(e.currentTarget.dataset.id);
     console.log(firstI);
     var item = EssayItem(1,1);
@@ -47,9 +47,10 @@ Page({
     this.setData({
       EssayList: this.data.EssayList
     } );   
+    moveCancel(this);
   },
   //增加第一大点
-  add_first: function (e) {
+  bindAdd_first: function (e) {
     var item = EssayItem(1, [
        EssayItem(1,"")
        ]);
@@ -57,6 +58,7 @@ Page({
     this.setData({
       EssayList: this.data.EssayList
     });
+    moveCancel(this);
   },
 
   
@@ -85,12 +87,17 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
+    var page = this;
+    if (getApp().globalData.saveOnBack){
+      saveEssay(page);
+    }
   },
   /**
    * 保存
    */
   bindSaveEssay:function(){
-    saveEssay(this)
+    saveEssay(this);
+    moveCancel(this);
   },
 
   /**
@@ -99,10 +106,11 @@ Page({
   bindTitleInput: function (e) {
     console.log(e.detail.value);
     this.data.title = e.detail.value;
+    moveCancel(this);
   },
 
 
-copyTBL: function (e) {
+bindCopyTBL: function (e) {
     var self = this;
     wx.setClipboardData({
       // data: ConvertTool.mapToJson(ConvertTool.objToStrMap (self.data.EssayList)),
@@ -122,8 +130,9 @@ copyTBL: function (e) {
         })
       }
     });
+    moveCancel(this);
   } ,
-moveto_second:function(e){
+bindMoveto_second:function(e){
   var index = e.currentTarget.dataset.id.split('.');
   var to_firstI = parseInt(index[0]);
   var to_secondI = parseInt(index[1]);
@@ -134,13 +143,7 @@ moveto_second:function(e){
   this.data.EssayList[from_firstI].children.splice(from_secondI, 1);
   this.data.EssayList[to_firstI].children.splice(to_secondI, 0, temp);
 
-  this.setData({
-    move_temp: {
-      move_temp_firstI: -1,
-      move_temp_secondI: -1
-    },
-    EssayList: this.data.EssayList
-  });
+  moveCancel(this);
 }, 
 first_move: function (e) {
   var to_firstI = e.currentTarget.dataset.id;
@@ -150,13 +153,7 @@ first_move: function (e) {
   this.data.EssayList.splice(from_firstI, 1);
   this.data.EssayList.splice(to_firstI, 0, temp);
 
-  this.setData({
-    move_temp: {
-      move_temp_firstI: -1,
-      move_temp_secondI: -1
-    },
-    EssayList: this.data.EssayList
-  });
+  moveCancel(this);
 }
 ,
 bindTouchStart: function (e) {
@@ -166,13 +163,13 @@ bindTouchEnd: function (e) {
   this.endTime = e.timeStamp;
 },
 //子项点击和长按事件
-second_longtap: function (e) {
+bindSecond_longtap: function (e) {
   var page = this;
   var index = e.currentTarget.dataset.id.split('.');
   var firstI = parseInt(index[0]);
   var secondI = parseInt(index[1]);
   wx.showActionSheet({
-    itemList: ['删除' + (firstI+1)+".("+(secondI+1)+")", '移动', 'C'],
+    itemList: ['删除' + (firstI+1)+".("+(secondI+1)+")", '移动'],
     success: function (res) {
       switch(res.tapIndex){
         case 0://删除
@@ -202,10 +199,11 @@ second_longtap: function (e) {
     fail: function (res) {
       console.log(res.errMsg)
     }
-  })
+  });
+  moveCancel(this);
 },
 //标题的长按修改
-  first_longtap: function(e){
+bindFirst_longtap: function(e){
     var firstI = e.currentTarget.dataset.id;
     var page = this;
     wx.showActionSheet({
@@ -242,10 +240,11 @@ second_longtap: function (e) {
       fail: function (res) {
         console.log(res.errMsg)
       }
-    })
+    });
+    moveCancel(this);
   },
 //点击按钮弹出指定的hiddenmodalput弹出框  
-modalinput: function (e) {
+bindModalinputTap: function (e) {
   if (this.endTime - this.startTime < 350) {
     var index = e.currentTarget.dataset.id.split('.');
     var firstI = parseInt(index[0]);
@@ -260,10 +259,11 @@ modalinput: function (e) {
         text: content
       }
     })
-  }
+  };
+  moveCancel(this);
 },
 //取消按钮  
-cancel: function () {
+bindCancel: function () {
   this.setData({
     modalinput: {
       hidden: true,
@@ -283,7 +283,7 @@ bindInput: function (e) {
     var secondI = parseInt(index[1]);
     this.data.EssayList[firstI].children[secondI].content = "" + e.detail.value;
   }
-
+  moveCancel(this);
 },
 //确认  
 confirm: function (e) {
@@ -300,6 +300,19 @@ confirm: function (e) {
 }  
 
 })
+
+//移动取消
+function moveCancel(page){
+  if (page.data.move_temp.move_temp_firstI != -1 || page.data.move_temp.move_temp_secondI!=-1){
+    page.setData({
+      move_temp: {
+        move_temp_firstI: -1,
+        move_temp_secondI: -1
+      },
+      EssayList: page.data.EssayList
+    });
+  }
+}
 
 function saveEssay(page){
   StorageTool.saveEssayList(page.data.id, page.data.EssayList, page.data.title);

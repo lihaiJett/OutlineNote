@@ -17,7 +17,7 @@
 
   <view class="btn_list" >
     <view class="entry_btn" bindtap="toListPage">开始</view>
-    <!-- <view class="entry_btn" bindtap="toListPage">设置</view> -->
+    <view class="entry_btn" bindtap="toSetting">设置</view> 
   </view>
 
   <view class="tips">

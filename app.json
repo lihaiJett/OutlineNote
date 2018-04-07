@@ -5,7 +5,8 @@
     "pages/editor/myview",
     "pages/list/list",
     "pages/add/add",
-    "pages/move_test/moveable"
+    "pages/move_test/moveable",
+    "pages/setting/setting"
   ],
   "window": {
     "backgroundTextStyle": "light",

@@ -81,11 +81,15 @@ width: 100%;
 .second_move{
 
   padding: 5rpx;
-  height: 1rem;
   background-color: yellow;
-
+  text-align: center;
 }
+.first_move{
 
+  padding: 5rpx;
+  background-color: yellow;
+  text-align: center;
+}
 .btn{
   border-radius: 4px;
   display: block;
