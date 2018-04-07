@@ -330,7 +330,7 @@ function saveEssay(page){
 function getDataString1(page) {
   var arr = page.data.EssayList;
   console.log(arr);
-  var s = "";
+  var s = page.data.title + "\r\n" ;
   if (arr.length) {
     var first_index = 1;
     arr.forEach((item) => {
