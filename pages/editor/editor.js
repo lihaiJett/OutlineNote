@@ -1,3 +1,18 @@
+/*
+ * Copyright 2017 lihaiJett. All Rights Reserved.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 // pages/manager/myview.js
 var ConvertTool = require('../../utils/ConvertTool');
 var StorageTool = require('../../utils/storage');
@@ -334,7 +349,7 @@ function getDataString1(page) {
   if (arr.length) {
     var first_index = 1;
     arr.forEach((item) => {
-      s += first_index + ". \r\n";
+      s += first_index + "." + (typeof (item.content) == "undefined" ? "" : item.content) +"\r\n";
       if (item.children){
         var second_index = 1;
         item.children.forEach((item) => {
